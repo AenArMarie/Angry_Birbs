@@ -43,7 +43,7 @@ public class EventHandler : MonoBehaviour
         _cameraFollow.SetCameraActivity(status);
     }
 
-    public void NextBirdIsUp()
+    public void NextBirdIsUp() //ставим следующую птицу в рогатку, если она есть
     {
         if(!_won)
         {

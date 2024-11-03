@@ -13,7 +13,7 @@ public class SlingshotHandler : MonoBehaviour
     {
         NextBirdReady();
     }
-    public bool NextBirdReady()
+    public bool NextBirdReady() //готовим следующую птицу к запуску
     {
         if (_currentBirdCount < birds.Count && active)
         {

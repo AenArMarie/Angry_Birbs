@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
-    public float _deathDelay = 1f;
-    public float _minImpactSpeed = 5f;
+    public float deathDelay = 1f;
+    public float minImpactSpeed = 5f;
     [SerializeField] private AudioClip _deathSoundClip;
     private bool _isDying = false;
 
@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.relativeVelocity.magnitude >= _minImpactSpeed)
+        if (collision.relativeVelocity.magnitude >= minImpactSpeed)
         {
             if ((collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Wall")) && !_isDying)
             {
@@ -28,9 +28,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private IEnumerator DieAfterDelay()
+    private IEnumerator DieAfterDelay() //умирает после задержкки (можно добавить эффекты смерти)
     {
-        yield return new WaitForSeconds(_deathDelay);
+        yield return new WaitForSeconds(deathDelay);
         SoundFXHandler.instance.PlaySoundFXClip(_deathSoundClip, transform, 1f);
         _eventHandler.DecreaseEnemyCount();
         Destroy(gameObject);

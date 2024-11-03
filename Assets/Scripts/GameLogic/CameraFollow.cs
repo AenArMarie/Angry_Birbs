@@ -10,11 +10,11 @@ public class CameraFollow : MonoBehaviour
     private Rigidbody2D _targetRigidbody; // цель для слежения
     private bool _isFollowing = false; // следует ли камера за птицей
     private bool _isDragging = false; // перетаскивает ли игрок камеру
-    private bool _cameraActive = true; //
-    private Vector3 _initialPosition; // Initial position of the camera
-    private Vector3 _lastTouchPosition; // Last recorded touch position for dragging
+    private bool _cameraActive = true;
+    private Vector3 _initialPosition; 
+    private Vector3 _lastTouchPosition; // последняя записанная позиция соприкосновения для перетаскивания
 
-    // Camera boundaries
+    // границы камеры
     private float _minX ;
     private float _maxX;
     private float _minY;
@@ -37,7 +37,7 @@ public class CameraFollow : MonoBehaviour
         _initialPosition = transform.position;
     }
 
-    public void SetTarget(Rigidbody2D targetRigidbody)
+    public void SetTarget(Rigidbody2D targetRigidbody) //передача камере цели для слежения
     {
         _targetRigidbody = targetRigidbody;
         _cameraActive = true;
@@ -69,7 +69,7 @@ public class CameraFollow : MonoBehaviour
     {
         Vector3 targetPosition = new Vector3(_targetRigidbody.position.x, _targetRigidbody.position.y, transform.position.z);
         targetPosition = ClampPosition(targetPosition);
-        transform.position = Vector3.Lerp(transform.position, targetPosition, _followSpeed * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, targetPosition, _followSpeed * Time.deltaTime); //можно и через DoTween, но тогда будет спауниться твин при каждом передвижении
     }
 
     private void HandleTouchInput()
@@ -109,7 +109,7 @@ public class CameraFollow : MonoBehaviour
         }
     }
 
-    private Vector3 ClampPosition(Vector3 position)
+    private Vector3 ClampPosition(Vector3 position) //ограничиваем позицию камеры по 4 осям
     {
         float clampedX = Mathf.Clamp(position.x, _minX, _maxX);
         float clampedY = Mathf.Clamp(position.y, _minY, _maxY);

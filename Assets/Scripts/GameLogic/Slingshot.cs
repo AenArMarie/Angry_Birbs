@@ -47,7 +47,7 @@ public class Slingshot : MonoBehaviour
     {
         if (_state == "Launched" && Time.frameCount % 10 == 0) 
         {
-            if (_rb.velocity.sqrMagnitude <= _stopFollowVelocityThreshold * _stopFollowVelocityThreshold
+            if (_rb.velocity.sqrMagnitude <= _stopFollowVelocityThreshold * _stopFollowVelocityThreshold //останавливаем передаем EventHandler информацию о том, что птица почти не имеет энергии
                 && transform.position.y <= _stopFollowHeightThreshold)
             {
                 _eventHandler.NextBirdIsUp();
@@ -81,7 +81,8 @@ public class Slingshot : MonoBehaviour
         Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
         RaycastHit2D hit = Physics2D.Raycast(touchPosition, Vector2.zero);
 
-        if (hit.collider != null && hit.collider.gameObject == gameObject && _state == "Active")
+        //если игрок касаетс€ птицы, запускаем раст€гивание рогатки
+        if (hit.collider != null && hit.collider.gameObject == gameObject && _state == "Active") 
         {
             _state = "Dragging";
             _eventHandler.SetCameraStatus(false);
@@ -95,7 +96,8 @@ public class Slingshot : MonoBehaviour
             Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
             Vector2 direction = touchPosition - _startPosition;
 
-            if (direction.magnitude > _minDragRadius)
+            //если игрок отт€нул птицу достаточно сильно, запускаем ее
+            if (direction.magnitude > _minDragRadius) 
             {
                 Vector2 releaseVector = _startPosition - (Vector2)transform.position;
                 _rb.isKinematic = false;
@@ -125,7 +127,7 @@ public class Slingshot : MonoBehaviour
             Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
             Vector2 direction = touchPosition - _startPosition;
 
-            // Limit dragging within radius
+            // ограничиваем радиус отт€гивани€ рогатки
             if (direction.magnitude > _maxDragRadius)
             {
                 direction = direction.normalized * _maxDragRadius;
